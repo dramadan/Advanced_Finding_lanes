@@ -20,10 +20,10 @@ The goals / steps of this project are the following:
 [//]: # (Image References)
 
 [image1]: ./examples/undistort_output.png "Undistorted"
-[image2]: ./output_images/undistorted_imagess/Figure_1.PNG "Undistorted image"
-[image3]: ./output/binary/Figure_1.PNG "Binary Example"
-[image4]: ./output/perspective_transform/Figure_1.PNG "perspective transform"
-[image4-1]: ./Unperspective/Figure_1.PNG "original"
+[image2]: ./output_images/undistorted_imagess/Figure_1.png "Undistorted image"
+[image3]: ./output_images/binary/Figure_1.png "Binary Example"
+[image4]: ./output_images/perspective_transform/Figure_1.png "perspective transform"
+[image4-1]: ./output_images/Unperspective/Figure_1.png "original"
 [image5]: ./examples/color_fit_lines.jpg "Fit Visual"
 [image6]: ./examples/example_output.jpg "Output"
 [video1]: ./project_video.mp4 "Video"
