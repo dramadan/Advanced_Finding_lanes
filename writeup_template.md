@@ -26,7 +26,7 @@ The goals / steps of this project are the following:
 [image4-1]: ./output_images/Unperspective/Figure_1.png "original"
 [image5-1]: ./output_images/histogram/histogram_1.png "histogram"
 [image5]: ./examples/color_fit_lines.jpg "Fit Visual"
-[image6]: ./examples/example_output.jpg "Output"
+[image6]: ./examples/video.png "Output"
 [video1]: ./project_video.mp4 "Video"
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/571/view) Points
@@ -94,17 +94,24 @@ This resulted in the following source and destination points:
 
 I verified that my perspective transform was working as expected by drawing the `src` and `dst` points onto a test image and its warped counterpart to verify that the lines appear parallel in the warped image.
 
-![alt text][image4]   ![alt text][image4-1]
+After perspective transformation 
+![alt text][image4] 
+
+Original 
+![alt text][image4-1]
 
 #### 4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
 
+After distortion correction, binary data extraction and perspective transformation, i take a histogram across the bottom of the image to find the histogram peaks to identify the lane lines.
+![alt text][image5-1]
+This is done in the function find_lanes() in the code lines 145 through 234 in main.py.
 Then I did some other stuff and fit my lane lines with a 2nd order polynomial kinda like this:
 
 ![alt text][image5]
 
 #### 5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
 
-I did this in lines # through # in my code in `my_other_file.py`
+I did this in lines 286 through 306 in my code in `main.py`by defining conversions in x and y from pixels space to meters, fitting new polynomials in the world space for calculating their new radii of curvature.
 
 #### 6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
 
@@ -118,7 +125,7 @@ I implemented this step in lines # through # in my code in `yet_another_file.py`
 
 #### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).
 
-Here's a [link to my video result](./project_video.mp4)
+Here's a [link to my video result](./project_video_lanes.mp4)
 
 ---
 
