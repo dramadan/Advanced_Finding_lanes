@@ -136,3 +136,17 @@ Here's a [link to my video result](./project_video_lanes.mp4)
 #### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
 Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
+
+#####Challenges
+The challenge of the binary data extraction: I take into account 3 masks; white, yellow and gradient:
+The white mask was extracted from and RGB colour space image within the range (200,200,200) to (255,255,255), which perfectly detected white lane lines.
+The yellow mask was extracted from the HSV colour space image within the range (0,100,100)to (80,255,255), which perfectly detected yellow lane lines.
+The gradient mask was extracted using the sobel operator in the X direction with thresholds 30 to 150, which perfectly detected all vertical lines missed by the yellow and white masks due to shadows , which perfectly detected white lane lines. and different light conditions.
+
+#####Future work
+-sanity checks could help improve the tracking quality by raising a flag indicating a corrupt detected lane, initiating a new blind search.
+
+
+
+
+
