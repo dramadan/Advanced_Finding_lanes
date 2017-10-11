@@ -117,7 +117,7 @@ I did this in lines 286 through 306 in my code in `main.py`by defining conversio
 
 #### 6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
 
-I implemented this step in lines 108 through 142 in my code in `yet_anotmainher_file.py` in the function `draw_lane()`.  Here is an example of my result on a test image:
+I implemented this step in lines 108 through 142 in my code in `main.py` in the function `draw_lane()`.  Here is an example of my result on a test image:
 
 ![alt text][image6]
 
@@ -137,13 +137,13 @@ Here's a [link to my video result](./project_video_lanes.mp4)
 
 Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
 
-#####Challenges
+#### Challenges
 The challenge of the binary data extraction: I take into account 3 masks; white, yellow and gradient:
 The white mask was extracted from and RGB colour space image within the range (200,200,200) to (255,255,255), which perfectly detected white lane lines.
 The yellow mask was extracted from the HSV colour space image within the range (0,100,100)to (80,255,255), which perfectly detected yellow lane lines.
 The gradient mask was extracted using the sobel operator in the X direction with thresholds 30 to 150, which perfectly detected all vertical lines missed by the yellow and white masks due to shadows , which perfectly detected white lane lines. and different light conditions.
 
-#####Future work
+#### Future work
 -sanity checks could help improve the tracking quality by raising a flag indicating a corrupt detected lane, initiating a new blind search.
 
 
