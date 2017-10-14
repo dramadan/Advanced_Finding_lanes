@@ -105,7 +105,7 @@ def perspective_transform(img):
     return perspective_img,unperspective_img, src,dst, M_inv
     
 #-----------------------------------------Draw lanes-----------------------------------------#
-def draw_lane(perspective_img, undist_img, Minv,left_lane_xfitted, right_lane_xfitted,curvature_center):
+def draw_lane(perspective_img, undist_img, Minv,left_lane_xfitted, right_lane_xfitted,left_lane_radius_of_curvature,right_lane_radius_of_curvature):
     ploty = np.linspace(0, perspective_img.shape[0] - 1, perspective_img.shape[0])
     # Create an image to draw the lines on
     warp_zero = np.zeros_like(perspective_img).astype(np.uint8)
@@ -129,15 +129,23 @@ def draw_lane(perspective_img, undist_img, Minv,left_lane_xfitted, right_lane_xf
     xm_per_pix = 3.7 / 700
 
     vehicle_pose = perspective_img.shape[1] // 2
+    
+    left_lane_line_base_pos = left_lane_xfitted[-1] * xm_per_pix
+    
+    right_lane_line_base_pos = right_lane_xfitted[-1] * xm_per_pix
+    
+    pos_center = (left_lane_line_base_pos + right_lane_line_base_pos) / 2
 
-    dx = (vehicle_pose * xm_per_pix - curvature_center)  # Positive if on right, Negative on left
+    dx = (vehicle_pose * xm_per_pix - pos_center)  # Positive if on right, Negative on left
 
     font = cv2.FONT_HERSHEY_SIMPLEX
-    cv2.putText(result, ('Curavature center = '+str(curvature_center) + ' m'),
-                 (10, 100), font, 1, (255, 255, 255), 2)
-    
+    cv2.putText(result, ('left lane curve radius = '+str(left_lane_radius_of_curvature) + ' m'),
+                (10, 100), font, 1, (255, 255, 255), 2)
+    cv2.putText(result, ('right lane curve radius = ' + str(right_lane_radius_of_curvature) + ' m'),
+                (10, 150), font, 1, (255, 255, 255), 2)
+
     cv2.putText(result, ('vehicle position in lane = '+str(dx)+' m'),
-                 (10, 200), font, 1, (255, 255, 255), 2)
+                (10, 200), font, 1, (255, 255, 255), 2)
 
     return result
 
@@ -299,11 +307,7 @@ def curvature_calculation(left_lane_fit, right_lane_fit, ploty,left_lane_xfitted
     left_lane_radius_of_curvature = ((1 + (2 * left_fit_cr[0] * y_eval * ym_per_pix + left_fit_cr[1]) ** 2) ** 1.5) / np.absolute(2 * left_fit_cr[0])
     right_lane_radius_of_curvature = ((1 + (2 * right_fit_cr[0] * y_eval * ym_per_pix + right_fit_cr[1]) ** 2) ** 1.5) / np.absolute(2 * right_fit_cr[0])
 
-    left_lane_line_base_pos = left_lane_xfitted[-1] * xm_per_pix
-    right_lane_line_base_pos = right_lane_xfitted[-1] * xm_per_pix
-    curvature_center = (left_lane_line_base_pos + right_lane_line_base_pos) / 2
-
-    return curvature_center
+    return left_lane_radius_of_curvature,right_lane_radius_of_curvature
 
 #-----------------------------------------Image processing-----------------------------------------#
 def process_image(img):
@@ -323,9 +327,9 @@ def process_image(img):
         left_lane_fit, right_lane_fit, ploty, left_lane_xfitted, right_lane_xfitted=find_lanes_continous(perspective_img,left_lane_fit, right_lane_fit, ploty, left_lane_xfitted, right_lane_xfitted)
    
     
-    curvature_center= curvature_calculation(left_lane_fit, right_lane_fit, ploty, left_lane_xfitted, right_lane_xfitted)
+    left_lane_radius_of_curvature,right_lane_radius_of_curvature= curvature_calculation(left_lane_fit, right_lane_fit, ploty, left_lane_xfitted, right_lane_xfitted)
    
-    return draw_lane(perspective_img, undist_test_image, M_inv,left_lane_xfitted, right_lane_xfitted,curvature_center)
+    return draw_lane(perspective_img, undist_test_image, M_inv,left_lane_xfitted, right_lane_xfitted,left_lane_radius_of_curvature,right_lane_radius_of_curvature)
 
 from moviepy.editor import VideoFileClip
 from IPython.display import HTML
